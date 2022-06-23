@@ -2,6 +2,7 @@ package com.gokhantamkoc.javabootcamp.odevhafta3.util;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.TimeZone;
 
 public class TimeUtils {
 	private final static SimpleDateFormat UTC_DATE = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
@@ -21,5 +22,8 @@ public class TimeUtils {
 
 	public static Date convertToDate(long millis) {
 		// Bu metodu doldurmanizi bekliyoruz.
+		Date date = new Date(millis);
+		UTC_DATE.setTimeZone(TimeZone.getTimeZone("GMT+3"));
+		return date;
 	}
 }
