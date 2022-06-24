@@ -35,7 +35,7 @@ public class CryptoDataCSVRepository implements CSVRepository {
 				++count;
 			}
 		}
-		catch (Exception ex) {
+		catch (IOException ex) {
 			System.out.println(ex.getMessage());
 			ex.printStackTrace();
 		}
