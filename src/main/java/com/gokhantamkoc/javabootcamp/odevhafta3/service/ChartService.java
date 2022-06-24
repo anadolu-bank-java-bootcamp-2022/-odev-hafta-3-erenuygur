@@ -14,7 +14,7 @@ public class ChartService {
 		this.cryptoDataCSVRepository = cryptoDataCSVRepository;
 	}
 	
-	public CandleStickChart createChartFromCryptoData() throws IOException {
+	public CandleStickChart createChartFromCryptoData() {
 		// Bu metodu doldurmanizi bekliyoruz.
 		CandleStickChart candleStickChart = new CandleStickChart("BTC/USDT");
 		try {
@@ -34,7 +34,7 @@ public class ChartService {
 			System.out.println(ex.getMessage());
 			ex.printStackTrace();
 		}
-		
+
 		return candleStickChart;
 	}
 }
