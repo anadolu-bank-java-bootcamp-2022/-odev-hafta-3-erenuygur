@@ -34,6 +34,7 @@ public class ChartService {
 			System.out.println(ex.getMessage());
 			ex.printStackTrace();
 		}
+		
 		return candleStickChart;
 	}
 }
