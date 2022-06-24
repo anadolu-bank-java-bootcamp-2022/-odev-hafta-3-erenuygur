@@ -30,7 +30,7 @@ public class ChartService {
 						candle.getVolume());
 			}
 		}
-		catch (Exception ex) {
+		catch (IOException ex) {
 			System.out.println(ex.getMessage());
 			ex.printStackTrace();
 		}
