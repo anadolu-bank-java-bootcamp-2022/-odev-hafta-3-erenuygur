@@ -1,47 +1,39 @@
-package com.gokhantamkoc.javabootcamp.odevhafta3.repository;
-
-import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
+package com.gokhantamkoc.javabootcamp.odevhafta3.service;
 
 import com.gokhantamkoc.javabootcamp.odevhafta3.model.Candle;
+import com.gokhantamkoc.javabootcamp.odevhafta3.repository.CSVRepository;
+import com.gokhantamkoc.javabootcamp.odevhafta3.util.chart.CandleStickChart;
+import java.io.IOException;
+import java.util.List;
 
-public class CryptoDataCSVRepository implements CSVRepository {
+public class ChartService {
 	
-	private final String COMMA_DELIMITER = ",";
+	CSVRepository cryptoDataCSVRepository;
+	
+	public ChartService(CSVRepository cryptoDataCSVRepository) {
+		this.cryptoDataCSVRepository = cryptoDataCSVRepository;
+	}
+	
+	public CandleStickChart createChartFromCryptoData() throws IOException {
+		// Bu metodu doldurmanizi bekliyoruz.
+		CandleStickChart candleStickChart = new CandleStickChart("BTC/USDT");
+		try {
+			List<Candle> candles = this.cryptoDataCSVRepository.readCSV("Binance_BTCUSDT_d.csv");
 
-	@Override
-	public List<Candle> readCSV(String filename) throws FileNotFoundException, IOException {
-		List<Candle> candles = new ArrayList<Candle>();
-		InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream(filename);
-		// Bu alandan itibaren kodunuzu yazabilirsiniz
-		InputStreamReader  isr = new InputStreamReader(inputStream);
-
-		try (BufferedReader bufferedReader = new BufferedReader(isr)) {
-			String line = null;
-
-			int count = 0;
-			while ((line = bufferedReader.readLine()) != null) {
-
-				if (count != 0) {
-					String[] n = line.split(",");
-					Candle candle = new Candle(Long.parseLong(n[0]), Double.parseDouble(n[3]),
-							Double.parseDouble(n[4]), Double.parseDouble(n[5]), Double.parseDouble(n[6]),
-							Double.parseDouble(n[7]));
-
-					candles.add(candle);
-				}
-
-				++count;
+			for (Candle candle : candles) {
+				candleStickChart.addCandle(
+						candle.getTime(),
+						candle.getOpen(),
+						candle.getHigh(),
+						candle.getLow(),
+						candle.getClose(),
+						candle.getVolume());
 			}
 		}
 		catch (Exception ex) {
 			System.out.println(ex.getMessage());
 			ex.printStackTrace();
 		}
-
-			// Bu alandan sonra kalan kod'a dokunmayiniz.
-		return candles;
+		return candleStickChart;
 	}
-
 }
