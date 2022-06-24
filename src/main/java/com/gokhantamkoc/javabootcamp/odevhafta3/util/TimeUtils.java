@@ -23,7 +23,6 @@ public class TimeUtils {
 	public static Date convertToDate(long millis) {
 		// Bu metodu doldurmanizi bekliyoruz.
 		Date date = new Date(millis);
-		UTC_DATE.setTimeZone(TimeZone.getTimeZone("GMT+3"));
 		return date;
 	}
 }

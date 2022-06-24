@@ -16,19 +16,29 @@ public class CryptoDataCSVRepository implements CSVRepository {
 		InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream(filename);
 		// Bu alandan itibaren kodunuzu yazabilirsiniz
 		
-		BufferedReader br = new BufferedReader(new FileReader(new File(filename)));
-		String line = null;
+		InputStreamReader  isr = new InputStreamReader(inputStream);
 
-		while((line = br.readLine()) != null) {
-			String[] n = line.split(",");
+		try (BufferedReader bufferedReader = new BufferedReader(isr)) {
+			String line = null;
 
-			Candle candle = new Candle(Long.parseLong(n[0]), Double.parseDouble(n[1]),
-					Double.parseDouble(n[2]), Double.parseDouble(n[3]), Double.parseDouble(n[4]),
-					Double.parseDouble(n[5]));
+			int count = 0;
+			while ((line = bufferedReader.readLine()) != null) {
 
-			candles.add(candle);
+				if (count != 0) {
+					String[] n = line.split(",");
+					Candle candle = new Candle(Long.parseLong(n[0]), Double.parseDouble(n[3]),
+							Double.parseDouble(n[4]), Double.parseDouble(n[5]), Double.parseDouble(n[6]),
+							Double.parseDouble(n[7]));
+
+					candles.add(candle);
+				}
+				++count;
+			}
 		}
-
+		catch (Exception ex) {
+			System.out.println(ex.getMessage());
+			ex.printStackTrace();
+		}
 		// Bu alandan sonra kalan kod'a dokunmayiniz.
 		return candles;
 	}
